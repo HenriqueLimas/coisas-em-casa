@@ -63,6 +63,10 @@ function createTodo(todo) {
 
   removeTodo.addEventListener('click', () => database.removeTodo(todo.id), false);
 
+  input.addEventListener('change', () => {
+    database.addDone(todo);
+  }, false);
+
   return li;
 }
 

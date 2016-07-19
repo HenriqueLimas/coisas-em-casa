@@ -1,11 +1,14 @@
 import firebase from 'firebase';
 import auth from '../auth';
 import todos from '../todos';
+import dones from '../dones';
 
 const module = {
   initDatabase,
   addTodo,
   removeTodo,
+  addDone,
+  removeDone,
   fetchAll,
   fetchUser
 };
@@ -36,6 +39,19 @@ function addTodo(description) {
   }
 }
 
+function addDone(todo) {
+  if (todo) {
+    removeTodo(todo.id);
+    firebase.database().ref('/families/1/dones').push(todo);
+  }
+}
+
+function removeDone(id) {
+  if (id) {
+    firebase.database().ref('/families/1/dones/' + id).remove();
+  }
+}
+
 function removeTodo(id) {
   if (id) {
     firebase.database().ref('/families/1/todos/' + id).remove();
@@ -44,6 +60,7 @@ function removeTodo(id) {
 
 function fetchAll() {
   const todosRef = firebase.database().ref('/families/1/todos');
+  const doneRef = firebase.database().ref('/families/1/dones');
 
   todosRef.on('child_added', data => {
     const todo = data.val();
@@ -57,6 +74,7 @@ function fetchAll() {
     });
   });
 
+
   todosRef.on('child_removed', data => {
     todos.removeTodo(data.key);
   });
@@ -66,6 +84,14 @@ function fetchAll() {
     todo.id = data.key;
 
     todos.updateTodo(todo);
+  });
+
+  doneRef.on('child_added', data => {
+    const done = data.val();
+    done.id = data.key;
+
+    const listElement = document.querySelector('.js-done-list');
+    listElement.appendChild(dones.createDone(done));
   });
 }
 
