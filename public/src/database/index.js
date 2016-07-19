@@ -93,6 +93,10 @@ function fetchAll() {
     const listElement = document.querySelector('.js-done-list');
     listElement.appendChild(dones.createDone(done));
   });
+
+  doneRef.on('child_removed', data => {
+    dones.removeDone(data.key);
+  });
 }
 
 function fetchUser(uid) {
