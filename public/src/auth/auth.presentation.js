@@ -12,7 +12,7 @@ function create() {
   signIn.classList.add('mdl-navigation__link');
   signIn.classList.add('sign-in');
   signIn.classList.add('js-sign-in');
-  signIn.innerText = 'Entrar com o Google';
+  signIn.innerText = 'Login';
 
   signIn.addEventListener('click', login, false);
 

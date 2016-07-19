@@ -13,7 +13,7 @@ export function initAuth() {
       // User is signed in.
       const signIn = document.querySelector('.js-sign-in');
 
-      signIn.innerText = user.displayName;
+      signIn.innerText = user.displayName.split(' ')[0];
 
       database.initDatabase();
     } else {
