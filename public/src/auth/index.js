@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import database from '../database';
 
 const module = {
   initAuth,
@@ -13,6 +14,8 @@ export function initAuth() {
       const signIn = document.querySelector('.js-sign-in');
 
       signIn.innerText = user.displayName;
+
+      database.initDatabase();
     } else {
       // No user is signed in.
     }
