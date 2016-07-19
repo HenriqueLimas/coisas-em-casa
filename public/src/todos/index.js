@@ -16,9 +16,11 @@ function initHandlers() {
     event.preventDefault();
 
     const form = event.target;
-    const description = event.target.querySelector('.js-add-todo__description').value;
+    const descriptionInput = event.target.querySelector('.js-add-todo__description');
 
-    database.addTodo(description);
+    database.addTodo(descriptionInput.value);
+
+    descriptionInput.value = '';
   }, false);
 }
 
@@ -33,7 +35,7 @@ function createTodo(todo) {
     </span>
 
     <span class="mdl-list__item-secondary-action">
-      <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--accent">
+      <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--accent js-remove-todo">
         <i class="material-icons">delete</i>
       </button>
     </span>
@@ -49,6 +51,7 @@ function createTodo(todo) {
   const input = li.querySelector('.js-checkbox');
   const description = li.querySelector('.js-description');
   const createdBy = li.querySelector('.js-created-by');
+  const removeTodo = li.querySelector('.js-remove-todo');
 
   li.setAttribute('data-todo', todo.id);
   label.setAttribute('for', todo.id);
@@ -57,6 +60,8 @@ function createTodo(todo) {
   window.componentHandler.upgradeElement(label);
   description.innerText = `${todo.description}`;
   createdBy.innerText = `Criado por ${todo.createdBy}`;
+
+  removeTodo.addEventListener('click', () => database.removeTodo(todo.id), false);
 
   return li;
 }

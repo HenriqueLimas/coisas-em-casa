@@ -5,6 +5,7 @@ import todos from '../todos';
 const module = {
   initDatabase,
   addTodo,
+  removeTodo,
   fetchAll,
   fetchUser
 };
@@ -32,6 +33,12 @@ function addTodo(description) {
       description,
       createdBy: auth.getCurrentUser().uid
     });
+  }
+}
+
+function removeTodo(id) {
+  if (id) {
+    firebase.database().ref('/families/1/todos/' + id).remove();
   }
 }
 
